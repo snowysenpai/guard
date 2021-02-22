@@ -1,0 +1,23 @@
+{
+  "name": "snowy-guard-v12",
+  "version": "0.0.1",
+  "description": "made by snowy",
+  "main": "bot.js",
+  "scripts": {
+    "test": "node bot.js"
+  },
+  "keywords": [
+    "guard"
+  ],
+  "author": "snowy",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "croxydb": "^0.0.7",
+    "discord.js": "^12.5.1",
+    "express": "^4.17.1",
+    "fs": "^0.0.1-security",
+    "moment": "^2.29.1",
+    "snekfetch": "^4.0.4"
+  }
+}
