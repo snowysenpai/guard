@@ -6,7 +6,7 @@ exports.run = async (bot, message, args) => {
    const seksizaman = moment.duration(bot.uptime).format(" D [gün], H [saat], m [dakika], s [saniye]");
    const istatistikler = new Discord.MessageEmbed()
   .setColor('#00f5ff')
-  .setFooter('Shavian BOT Stats', bot.user.avatarURL)
+  .setFooter('Snowy BOT Stats', bot.user.avatarURL)
   .addField("» **Botun Yapımcısı**", "<@!295791590096502784>")
   .addField("» **RAM Kullanımı**", (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) + ' MB', true)  
   .addField("» **Çalışma Zamanı**", seksizaman)
