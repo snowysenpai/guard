@@ -21,7 +21,7 @@ module.exports.run = (client, message, args) => {
           .addField('🌅 Hissedilen Sıcaklık: ', `${current.feelslike} Derece`, true)
           .addField('🌈 Rüzgar Oranı: ',current.winddisplay, true)
           .addField('🌁 Nem Oranı: ', `${current.humidity}%`, true)
-          message.channel.cache.send({embed});
+          message.channel.send({embed});
   })
 }
 module.exports.conf = {
@@ -31,7 +31,7 @@ module.exports.conf = {
  permLevel: 0
 }
 module.exports.help = {
- name:"havadurumu",
+  name:"havadurumu",
  description:"Havadurumunu Atar",
- usage:"havadurumu [lokasyon]"
+usage:"havadurumu [lokasyon]"
 } 
