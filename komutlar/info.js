@@ -7,7 +7,6 @@ exports.run = async (bot, message, args) => {
    const istatistikler = new Discord.MessageEmbed()
   .setColor('#00f5ff')
   .setFooter('Shavian BOT Stats', bot.user.avatarURL)
-  .addField("» **Botun Sahibi**", "<@!425336949516140547>")
   .addField("» **Botun Yapımcısı**", "<@!295791590096502784>")
   .addField("» **RAM Kullanımı**", (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) + ' MB', true)  
   .addField("» **Çalışma Zamanı**", seksizaman)
