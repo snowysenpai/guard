@@ -4,7 +4,7 @@ exports.run = async (client, message, args) => {
     return message.reply("Yetersiz Yetki!");
   let dcs_user = args[0];
   if (isNaN(dcs_user)) return message.reply("Doğru ID Girmelisiniz!");
-  await message.guild.members.ban(dcs_user);
+  await message.guild.members.ban(dcs_user).then(message.delete());
   return message.reply(`\`${dcs_user}\` Sunucudan Banlandı!`);
 };
 exports.conf = {
