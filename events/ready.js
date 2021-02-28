@@ -17,7 +17,7 @@ var oyun = [
 
         var random = Math.floor(Math.random()*(oyun.length-0+1)+0);
       
-        client.user.setActivity("Made by Snowy", {type:'WATCHING'});
+        client.user.setActivity("Snowy ❤️ Vestia", {type:'WATCHING'});
         }, 2 * 2500);
     
   console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] BOT: Aktif, Komutlar yüklendi!`);
