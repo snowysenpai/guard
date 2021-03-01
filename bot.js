@@ -282,3 +282,4 @@ client.on("voiceStateUpdate", async (snowy, dev) => {
         }
       })
       .catch(console.error);
+  });
