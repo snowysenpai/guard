@@ -141,7 +141,7 @@ client.on("message", async msg => {
 client.on("messageDelete", async (msj) => {
   if (msj.author.bot || msj.channel.type === "dm") return;
   let messageLog = msj.guild.channels.find(c => c.name === "message-log");
-  if (msj.guild.id !== cfg.sunucu) return;
+  if (msj.guild.id !== "811935924405403658");
   if (msj.attachments.first()) {
     messageLog
       .send({
@@ -200,7 +200,7 @@ client.on("messageDelete", async (msj) => {
 client.on("messageUpdate", async (old, nev) => {
   let messageLog = nev.guild.channels.find(c => c.name === "message-log");
   if (nev.author.bot || nev.channel.type === "dm") return;
-  if (nev.guild.id !== cfg.sunucu) return;
+  if (nev.guild.id !== "811935924405403658") return;
   if (old.content.toLowerCase() === nev.content.toLowerCase()) return;
   messageLog
     .send({
@@ -230,8 +230,7 @@ client.on("messageUpdate", async (old, nev) => {
 client.on("voiceStateUpdate", async (ankara, bodrum) => {
   let voiceLog = ankara.guild.channels.find(c => c.name === "voice-log");
   if (ankara.voiceChannel === bodrum.voiceChannel) return;
-  if (ankara.guild.id !== cfg.sunucu) return;
-  //if (ankara.id === '589577988568252448') return ankara.setVoiceChannel(null);
+  if (ankara.guild.id !== "811935924405403658") return;
 
   if (ankara.voiceChannel && !bodrum.voiceChannel)
     return voiceLog
