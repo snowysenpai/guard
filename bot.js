@@ -228,7 +228,7 @@ client.on("messageUpdate", async (old, nev) => {
 });
 /* ------------ VOICE LOG ------------ */
 client.on("voiceStateUpdate", async (ankara, bodrum) => {
-  let voiceLog = ankara.guild.channels.find(c => c.name === "voice-log");
+  let voiceLog = guild.channels.find(c => c.name === "voice-log");
   if (ankara.voiceChannel === bodrum.voiceChannel) return;
   if (ankara.guild.id !== "811935924405403658") return;
 
