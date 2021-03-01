@@ -140,8 +140,8 @@ client.on("message", async msg => {
    //////////////////////////////////////////////////////////////////////////
 client.on("messageDelete", async (msj) => {
   if (msj.author.bot || msj.channel.type === "dm") return;
-  let messageLog = msj.guild.channels.cache.get("811948839064829992");
-  if (msj.guild.id !== "811935924405403658") return;
+  let messageLog = msj.guild.channels.find(c => c.name === "message-log");
+  if (msj.guild.id !== cfg.sunucu) return;
   if (msj.attachments.first()) {
     messageLog
       .send({
@@ -196,11 +196,11 @@ client.on("messageDelete", async (msj) => {
       .catch(console.error);
   }
 });
-
+//
 client.on("messageUpdate", async (old, nev) => {
-  let messageLog = nev.guild.channels.cache.get("811948839064829992");
+  let messageLog = nev.guild.channels.find(c => c.name === "message-log");
   if (nev.author.bot || nev.channel.type === "dm") return;
-  if (nev.guild.id !== "811935924405403658") return;
+  if (nev.guild.id !== cfg.sunucu) return;
   if (old.content.toLowerCase() === nev.content.toLowerCase()) return;
   messageLog
     .send({
@@ -226,22 +226,22 @@ client.on("messageUpdate", async (old, nev) => {
     })
     .catch(console.error);
 });
+/* ------------ VOICE LOG ------------ */
+client.on("voiceStateUpdate", async (ankara, bodrum) => {
+  let voiceLog = ankara.guild.channels.find(c => c.name === "voice-log");
+  if (ankara.voiceChannel === bodrum.voiceChannel) return;
+  if (ankara.guild.id !== cfg.sunucu) return;
+  //if (ankara.id === '589577988568252448') return ankara.setVoiceChannel(null);
 
-/////////////////////////////////////////////////////////////////////
-client.on("voiceStateUpdate", async (snowy, dev) => {
-  let voiceLog = snowy.guild.channels.cache.get("811948812260212776");
-  if (snowy.voiceChannel === dev.voiceChannel) return;
-  if (snowy.guild.id !== "811935924405403658") return;
-
-  if (snowy.voiceChannel && !dev.voiceChannel)
+  if (ankara.voiceChannel && !bodrum.voiceChannel)
     return voiceLog
       .send({
         embed: {
           description:
             "<@" +
-            snowy.id +
+            ankara.id +
             "> adlı kullanıcı " +
-            snowy.voiceChannel +
+            ankara.voiceChannel +
             " kanalından çıkış yaptı.",
           color: Math.floor(Math.random() * (0xffffff + 1)),
           timestamp: new Date()
@@ -249,15 +249,15 @@ client.on("voiceStateUpdate", async (snowy, dev) => {
       })
       .catch(console.error);
 
-  if (!snowy.voiceChannel && dev.voiceChannel)
+  if (!ankara.voiceChannel && bodrum.voiceChannel)
     return voiceLog
       .send({
         embed: {
           description:
             "<@" +
-            dev.id +
+            bodrum.id +
             "> adlı kullanıcı " +
-            dev.voiceChannel +
+            bodrum.voiceChannel +
             " kanalına giriş yaptı.",
           color: Math.floor(Math.random() * (0xffffff + 1)),
           timestamp: new Date()
@@ -265,21 +265,21 @@ client.on("voiceStateUpdate", async (snowy, dev) => {
       })
       .catch(console.error);
 
-  if (snowy.voiceChannel !== dev.voiceChannel)
+  if (ankara.voiceChannel !== bodrum.voiceChannel)
     return voiceLog
       .send({
         embed: {
           description:
             "<@" +
-            snowy.id +
+            ankara.id +
             "> adlı kullanıcı " +
-            snowy.voiceChannel +
+            ankara.voiceChannel +
             " kanalından " +
-            dev.voiceChannel +
+            bodrum.voiceChannel +
             " kanalına giriş yaptı.",
           color: Math.floor(Math.random() * (0xffffff + 1)),
           timestamp: new Date()
         }
       })
       .catch(console.error);
-  });
+});
