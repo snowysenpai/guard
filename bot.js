@@ -141,7 +141,7 @@ client.on("message", async msg => {
 client.on("messageDelete", async (msj) => {
   if (msj.author.bot || msj.channel.type === "dm") return;
   let messageLog = msj.guild.channels.cache.get("811948839064829992");
-  if (msj.guild.id !== cfg.sunucu) return;
+  if (msj.guild.id !== ayarlar.sunucu) return;
   if (msj.attachments.first()) {
     messageLog
       .send({
@@ -200,7 +200,7 @@ client.on("messageDelete", async (msj) => {
 client.on("messageUpdate", async (old, nev) => {
   let messageLog = nev.guild.channels.cache.get("811948839064829992");
   if (nev.author.bot || nev.channel.type === "dm") return;
-  if (nev.guild.id !== cfg.sunucu) return;
+  if (nev.guild.id !== ayarlar.sunucu) return;
   if (old.content.toLowerCase() === nev.content.toLowerCase()) return;
   messageLog
     .send({
@@ -231,7 +231,7 @@ client.on("messageUpdate", async (old, nev) => {
 client.on("voiceStateUpdate", async (snowy, dev) => {
   let voiceLog = snowy.guild.channels.cache.get("811948812260212776");
   if (snowy.voiceChannel === dev.voiceChannel) return;
-  if (snowy.guild.id !== cfg.sunucu) return;
+  if (snowy.guild.id !== ayarlar.sunucu) return;
 
   if (snowy.voiceChannel && !dev.voiceChannel)
     return voiceLog
