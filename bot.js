@@ -140,7 +140,7 @@ client.on("message", async msg => {
    //////////////////////////////////////////////////////////////////////////
 client.on("messageDelete", async (msj) => {
   if (msj.author.bot || msj.channel.type === "dm") return;
-  let messageLog = msj.guild.channels.find(c => c.name === "message-log");
+  let messageLog = msj.guild.channels.cache.find(c => c.name === "message-log");
   if (msj.guild.id !== ayarlar.sunucu);
   if (msj.attachments.first()) {
     messageLog
@@ -198,7 +198,7 @@ client.on("messageDelete", async (msj) => {
 });
 //
 client.on("messageUpdate", async (old, nev) => {
-  let messageLog = nev.guild.channels.find(c => c.name === "message-log");
+  let messageLog = nev.guild.channels.cache.find(c => c.name === "message-log");
   if (nev.author.bot || nev.channel.type === "dm") return;
   if (nev.guild.id !== ayarlar.sunucu) return;
   if (old.content.toLowerCase() === nev.content.toLowerCase()) return;
@@ -228,7 +228,7 @@ client.on("messageUpdate", async (old, nev) => {
 });
 /* ------------ VOICE LOG ------------ */
 client.on("voiceStateUpdate", async (antalya, bodrum) => {
-  let voiceLog = antalya.guild.channels.find(c => c.name === "voice-log");
+  let voiceLog = antalya.guild.channels.cache.find(c => c.name === "voice-log");
   if (antalya.voiceChannel === bodrum.voiceChannel) return;
   if (antalya.guild.id !== ayarlar.sunucu) return;
 
