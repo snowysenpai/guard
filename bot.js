@@ -227,20 +227,20 @@ client.on("messageUpdate", async (old, nev) => {
     .catch(console.error);
 });
 /* ------------ VOICE LOG ------------ */
-client.on("voiceStateUpdate", async (ankara, bodrum) => {
-  let voiceLog = ankara.guild.channels.find(c => c.name === "voice-log");
-  if (ankara.voiceChannel === bodrum.voiceChannel) return;
-  if (ankara.guild.id !== ayarlar.sunucu) return;
+client.on("voiceStateUpdate", async (antalya, bodrum) => {
+  let voiceLog = antalya.guild.channels.find(c => c.name === "voice-log");
+  if (antalya.voiceChannel === bodrum.voiceChannel) return;
+  if (antalya.guild.id !== ayarlar.sunucu) return;
 
-  if (ankara.voiceChannel && !bodrum.voiceChannel)
+  if (antalya.voiceChannel && !bodrum.voiceChannel)
     return voiceLog
       .send({
         embed: {
           description:
             "<@" +
-            ankara.id +
+            antalya.id +
             "> adlı kullanıcı " +
-            ankara.voiceChannel +
+            antalya.voiceChannel +
             " kanalından çıkış yaptı.",
           color: Math.floor(Math.random() * (0xffffff + 1)),
           timestamp: new Date()
@@ -248,7 +248,7 @@ client.on("voiceStateUpdate", async (ankara, bodrum) => {
       })
       .catch(console.error);
 
-  if (!ankara.voiceChannel && bodrum.voiceChannel)
+  if (!antalya.voiceChannel && bodrum.voiceChannel)
     return voiceLog
       .send({
         embed: {
@@ -264,15 +264,15 @@ client.on("voiceStateUpdate", async (ankara, bodrum) => {
       })
       .catch(console.error);
 
-  if (ankara.voiceChannel !== bodrum.voiceChannel)
+  if (antalya.voiceChannel !== bodrum.voiceChannel)
     return voiceLog
       .send({
         embed: {
           description:
             "<@" +
-            ankara.id +
+            antalya.id +
             "> adlı kullanıcı " +
-            ankara.voiceChannel +
+            antalya.voiceChannel +
             " kanalından " +
             bodrum.voiceChannel +
             " kanalına giriş yaptı.",
