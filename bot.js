@@ -138,45 +138,147 @@ client.on("message", async msg => {
        if (!i) return;
    });
    //////////////////////////////////////////////////////////////////////////
-   client.on("guildMemberAdd", async member => {
-    let bot_koruma = await db.fetch(`botk_${member.guild.id}`);
-    if (bot_koruma == "acik") {
-      const log = member.guild.channels.cache.get("811937328812785744");
-      if (!log) return;
-      const rol = member.guild.roles.cache.get("811937225733701672");
-      const rol2 = member.guild.roles.cache.get("811937275746189312")
-      if (!member.user.bot) return;
-      const entry = await member.guild
-        .fetchAuditLogs({ type: "MEMBER_BOT_ADD" })
-        .then(audit => audit.entries.first());
-  
-      if (entry.executor.id == member.guild.owner.id) return;
-      if (entry.executor.id == ayarlar.sahip) return;
-      let kisi = member.guild.member(entry.executor);
-      await kisi.roles.cache.forEach(x =>
-        kisi.roles.remove(x).then(f => kisi.roles.add(rol).then(y => kisi.roles.add(rol2)))
-      );
-  
-      await member.kick("Anti Raid Sistemi!");
-  
-      const embed = new Discord.MessageEmbed()
-        .setTitle(`Bot Koruma Sistemi`)
-        .setColor("RED")
-        .setDescription(
-          `Sunucuya bir bot eklendi botu sunucudan attım bütün rollerini aldım ve ayarladığınız cezalı rolünü verdim. \n\n**Eklenen Bot Bilgileri** \nBot İsmi: \`${member.user.tag}\` \nBot ID: \`${member.user.id}\` \n\n**Botu Ekleyen Kullanıcı Kullanıcı Bilgileri** \nEkleyen Kullanıcı: \`${entry.executor.tag}\` \nEkleyen Kullanıcı ID: \`${entry.executor.id}\``
-        )
-        .setTimestamp()
-        .setFooter(client.user.tag, client.user.avatarURL);
-      log.send(embed);
-   
-      var owner = new Discord.MessageEmbed()
-        .setTitle(`Bot Koruma Koruma Sistemi`)
-        .setColor("RED")
-        .setDescription(
-          `Sunucuya bir bot eklendi botu sunucudan attım bütün rollerini aldım ve ayarladığınız cezalı rolünü verdim. \n\n**Eklenen Bot Bilgileri** \nBot İsmi: \`${member.user.tag}\` \nBot ID: \`${member.user.id}\` \n\n**Botu Ekleyen Kullanıcı Kullanıcı Bilgileri** \nEkleyen Kullanıcı: \`${entry.executor.tag}\` \nEkleyen Kullanıcı ID: \`${entry.executor.id}\``
-        )
-        .setTimestamp()
-        .setFooter(client.user.tag, client.user.avatarURL);
-      member.guild.owner.send(owner);
-    }
-  });
+client.on("messageDelete", async (msj) => {
+  if (msj.author.bot || msj.channel.type === "dm") return;
+  let messageLog = msj.guild.channels.cache.id("811948839064829992");
+  if (msj.guild.id !== cfg.sunucu) return;
+  if (msj.attachments.first()) {
+    messageLog
+      .send({
+        embed: {
+          description:
+            msj.channel +
+            " kanalında " +
+            msj.author +
+            " tarafından bir fotoğraf silindi. \n Silinen Fotoğraf : ",
+          footer: {
+            text: "Silindiği Saat:"
+          },
+          timestamp: new Date(),
+          author: {
+            name: msj.author.tag,
+            icon_url: msj.author.avatarURL
+          },
+          thumbnail: {
+            url: msj.author.avatarURL
+          },
+          image: {
+            url: msj.attachments.first().proxyURL
+          },
+          color: Math.floor(Math.random() * (0xffffff + 1))
+        }
+      })
+      .catch(console.error);
+  } else {
+    messageLog
+      .send({
+        embed: {
+          color: Math.floor(Math.random() * (0xffffff + 1)),
+          footer: {
+            text: "Silindiği Saat:"
+          },
+          timestamp: new Date(),
+          author: {
+            name: msj.author.tag,
+            icon_url: msj.author.avatarURL
+          },
+          thumbnail: {
+            url: msj.author.avatarURL
+          },
+          description:
+            msj.channel +
+            " kanalında " +
+            msj.author +
+            " tarafından bir mesaj silindi. \n\n Silinen Mesaj : " +
+            msj.content
+        }
+      })
+      .catch(console.error);
+  }
+});
+
+client.on("messageUpdate", async (old, nev) => {
+  let messageLog = nev.guild.channels.cache.id("811948839064829992");
+  if (nev.author.bot || nev.channel.type === "dm") return;
+  if (nev.guild.id !== cfg.sunucu) return;
+  if (old.content.toLowerCase() === nev.content.toLowerCase()) return;
+  messageLog
+    .send({
+      embed: {
+        description:
+          nev.channel +
+          " kanalında " +
+          nev.author +
+          " tarafından bir mesaj düzenlendi. \n\n Eski Mesaj : " +
+          old.content +
+          "\n\n Yeni Mesaj : " +
+          nev.content,
+        color: Math.floor(Math.random() * (0xffffff + 1)),
+        author: {
+          name: old.author.tag,
+          icon_url: old.author.avatarURL
+        },
+        thumbnail: {
+          url: old.author.avatarURL
+        },
+        timestamp: new Date()
+      }
+    })
+    .catch(console.error);
+});
+
+/////////////////////////////////////////////////////////////////////
+client.on("voiceStateUpdate", async (snowy, dev) => {
+  let voiceLog = snowy.guild.channels.cache.id("811948812260212776");
+  if (snowy.voiceChannel === dev.voiceChannel) return;
+  if (snowy.guild.id !== cfg.sunucu) return;
+
+  if (snowy.voiceChannel && !dev.voiceChannel)
+    return voiceLog
+      .send({
+        embed: {
+          description:
+            "<@" +
+            snowy.id +
+            "> adlı kullanıcı " +
+            snowy.voiceChannel +
+            " kanalından çıkış yaptı.",
+          color: Math.floor(Math.random() * (0xffffff + 1)),
+          timestamp: new Date()
+        }
+      })
+      .catch(console.error);
+
+  if (!snowy.voiceChannel && dev.voiceChannel)
+    return voiceLog
+      .send({
+        embed: {
+          description:
+            "<@" +
+            dev.id +
+            "> adlı kullanıcı " +
+            dev.voiceChannel +
+            " kanalına giriş yaptı.",
+          color: Math.floor(Math.random() * (0xffffff + 1)),
+          timestamp: new Date()
+        }
+      })
+      .catch(console.error);
+
+  if (snowy.voiceChannel !== dev.voiceChannel)
+    return voiceLog
+      .send({
+        embed: {
+          description:
+            "<@" +
+            snowy.id +
+            "> adlı kullanıcı " +
+            snowy.voiceChannel +
+            " kanalından " +
+            dev.voiceChannel +
+            " kanalına giriş yaptı.",
+          color: Math.floor(Math.random() * (0xffffff + 1)),
+          timestamp: new Date()
+        }
+      })
+      .catch(console.error);
